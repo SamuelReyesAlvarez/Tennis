@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tennis Game</title>
+    <title>Tennis</title>
 </head>
-<body>
+<body style="text-align: center;">
     <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script>
+// @author: Samuel Reyes Alvarez
+// @version: 3 (30/07/2019)
 var canvas;
 var canvasContext;
 var speed = 30;
@@ -24,6 +26,7 @@ var machineSpeed = 6;
 var playerScore = 0;
 var machineScore = 0;
 var winner = false;
+var started = false;
 
 const SEPARATION = 20;
 const PADDLE_WIDTH = 10;
@@ -48,7 +51,7 @@ window.onload = function() {
 }
 
 function moveAll() {
-    if (winner) {
+    if (winner || !started) {
         return;
     }
 
@@ -96,36 +99,42 @@ function moveAll() {
 
 function drawEverything() {
     // Background
-    colorRect(0, 0, canvas.width, canvas.height, 'black');
+    drawRect(0, 0, canvas.width, canvas.height, 'black');
+
+    if (!started) {
+        printText("white", "32px Arial", "Welcome Player", 300, 200);
+        printText("white", "16px Arial", "You play with the left paddle.", 250, 250);
+        printText("white", "16px Arial", "You can move it with the mouse movement.", 250, 280);
+        printText("white", "16px Arial", "Game finishes when one of both get 5 points.", 250, 310);
+        printText("white", "12px Arial", "Click to start the game.", 345, 500);
+        return;
+    }
 
     if (winner) {
-        canvasContext.fillStyle = "white";
-        canvasContext.font = "32px Arial";
-        canvasContext.fillText("Player " + playerScore + " - " + machineScore + " Machine", 255, 100);
-        canvasContext.font = "60px Arial";
+        printText("white", "32px Arial", "Player " + playerScore + " - " + machineScore + " Machine", 255, 100);
         if (playerScore >= WINNING_SCORE) {
-            canvasContext.fillText("YOU WON!!", 235, 300);
+            printText("white", "60px Arial", "YOU WON!!", 235, 300);
         }
         if (machineScore >= WINNING_SCORE) {
-            canvasContext.fillText("YOU LOST!!", 225, 300);
+            printText("white", "60px Arial", "YOU LOST!!", 225, 300);
         }
-        canvasContext.font = "12px Arial";
-        canvasContext.fillText("Click to continue", 355, 500);
+        printText("white", "12px Arial", "Click to continue", 355, 500);
         return;
     }
 
     drawNet();
 
     // Paddles
-    colorRect(SEPARATION, playerY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
-    colorRect(canvas.width - PADDLE_WIDTH - SEPARATION, paddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+    drawRect(SEPARATION, playerY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
+    drawRect(canvas.width - PADDLE_WIDTH - SEPARATION, paddleY, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
     
     // Ball
-    colorCircle(ballX, ballY, ballRadius * 2, 'white');
+    drawCircle(ballX, ballY, ballRadius * 2, 'white');
 
-    canvasContext.font = "32px Arial";
-    canvasContext.fillText(playerScore, 100, 100);
-    canvasContext.fillText(machineScore, canvas.width - 100, 100);
+    printText("white", "16px Arial", "Player", 90, 65);
+    printText("white", "32px Arial", playerScore, 100, 100);
+    printText("white", "16px Arial", "Machine", canvas.width - 130, 65);
+    printText("white", "32px Arial", machineScore, canvas.width - 110, 100);
 }
 
 function ballReset() {
@@ -182,23 +191,30 @@ function handleMouseClick(evt) {
         machineScore = 0;
         winner = false;
     }
+    started = true;
 }
 
-function colorRect(leftX, topY, width, height, drawColor) {
+function drawRect(leftX, topY, width, height, drawColor) {
     canvasContext.fillStyle = drawColor;
     canvasContext.fillRect(leftX, topY, width, height);
 }
 
-function colorCircle(centerX, centerY, radius, drawColor) {
+function drawCircle(centerX, centerY, radius, drawColor) {
     canvasContext.fillStyle = drawColor;
     canvasContext.beginPath();
     canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
     canvasContext.fill();
 }
 
+function printText(drawColor, fontStyle, text, leftX, topY) {
+    canvasContext.fillStyle = drawColor;
+    canvasContext.font = fontStyle;
+    canvasContext.fillText(text, leftX, topY);
+}
+
 function drawNet() {
     for (var i = 0; i < canvas.height; i += 40) {
-        colorRect(canvas.width / 2 - 1, i, 2, 20, 'white');
+        drawRect(canvas.width / 2 - 1, i, 2, 20, 'white');
     }
 }
     </script>
