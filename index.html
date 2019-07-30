@@ -10,7 +10,7 @@
     <canvas id="gameCanvas" width="800" height="600" style="border: white solid 5px;"></canvas>
     <script>
         // @author: Samuel Reyes Alvarez
-        // @version: 8 (30/07/2019)
+        // @version: 9 (30/07/2019)
         var canvas;
         var canvasContext;
         var ballX;
@@ -38,6 +38,7 @@
         window.onload = function () {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
+            canvasContext.textAlign = "center";
 
             initVars();
 
@@ -109,14 +110,14 @@
             drawRect(0, 0, canvas.width, canvas.height, 'black');
 
             if (winner) {
-                printText("white", "32px Arial", "Player " + playerScore + " - " + machineScore + " Machine", 255, 100);
+                printText("white", "32px Arial", "Player " + playerScore + " - " + machineScore + " Machine", canvas.width / 2, 100);
                 if (playerScore >= WINNING_SCORE) {
-                    printText("white", "60px Arial", "YOU WON!!", 235, 300);
+                    printText("white", "60px Arial", "YOU WON!!", canvas.width / 2, canvas.height / 2);
                 }
                 if (machineScore >= WINNING_SCORE) {
-                    printText("white", "60px Arial", "YOU LOST!!", 225, 300);
+                    printText("white", "60px Arial", "YOU LOST!!", canvas.width / 2, canvas.height / 2);
                 }
-                printText("white", "14px Arial", "Click to continue", 355, 500);
+                printText("white", "14px Arial", "Click to continue", canvas.width / 2, canvas.height - 100);
                 return;
             }
 
@@ -129,18 +130,18 @@
             // Ball
             drawCircle(ballX, ballY, ballRadius * 2, 'white');
 
-            printText("white", "16px Arial", "Player", 90, 65);
+            printText("white", "16px Arial", "Player", 100, 65);
             printText("white", "32px Arial", playerScore, 100, 100);
-            printText("white", "16px Arial", "Machine", canvas.width - 130, 65);
-            printText("white", "32px Arial", machineScore, canvas.width - 110, 100);
+            printText("white", "16px Arial", "Machine", canvas.width - 100, 65);
+            printText("white", "32px Arial", machineScore, canvas.width - 100, 100);
 
             if (!started) {
-                printText("green", "32px Arial", "Welcome to Tennis Arcade", 220, 100);
+                printText("green", "32px Arial", "Welcome to Tennis Arcade", canvas.width / 2, 100);
                 printText("green", "16px Arial", "- You will play with the left paddle.", 150, 250);
                 printText("green", "16px Arial",
                     "- You can move up/down your paddle by moving the mouse inside the black box.", 150, 280);
                 printText("green", "16px Arial", "- Game finishes when one of both get 5 points.", 150, 310);
-                printText("green", "14px Arial", "Click to start the game.", 330, 500);
+                printText("green", "14px Arial", "Click to start the game.", canvas.width / 2, canvas.height - 100);
                 return;
             }
         }
