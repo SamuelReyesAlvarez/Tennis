@@ -10,7 +10,7 @@
     <canvas id="gameCanvas" width="800" height="600" style="border: white solid 5px;"></canvas>
     <script>
         // @author: Samuel Reyes Alvarez
-        // @version: 9 (30/07/2019)
+        // @version: 10 (30/07/2019)
         var canvas;
         var canvasContext;
         var ballX;
@@ -137,10 +137,12 @@
 
             if (!started) {
                 printText("green", "32px Arial", "Welcome to Tennis Arcade", canvas.width / 2, 100);
+                canvasContext.textAlign = "left";
                 printText("green", "16px Arial", "- You will play with the left paddle.", 150, 250);
                 printText("green", "16px Arial",
                     "- You can move up/down your paddle by moving the mouse inside the black box.", 150, 280);
                 printText("green", "16px Arial", "- Game finishes when one of both get 5 points.", 150, 310);
+                canvasContext.textAlign = "center";
                 printText("green", "14px Arial", "Click to start the game.", canvas.width / 2, canvas.height - 100);
                 return;
             }
