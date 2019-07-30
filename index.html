@@ -2,30 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tennis</title>
+    <title>Tennis Arcade</title>
 </head>
 <body style="text-align: center;">
     <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script>
 // @author: Samuel Reyes Alvarez
-// @version: 3 (30/07/2019)
+// @version: 4 (30/07/2019)
 var canvas;
 var canvasContext;
-var speed = 30;
-var ballX = 400;
-var ballSpeedX = 10;
-var ballY = 300;
-var ballSpeedY = 4;
-var ballRadius = 5;
-var playerY = 250;
-var paddleY = 250;
-var flag = false;
-var machinePrecision = 20;
-var machineSpeed = 6;
+var speed;
+var ballX;
+var ballSpeedX;
+var ballY;
+var ballSpeedY;
+var ballRadius;
+var playerY;
+var paddleY;
+var flag;
+var machinePrecision;
+var machineSpeed;
+var playerScore;
+var machineScore;
+var winner;
 
-var playerScore = 0;
-var machineScore = 0;
-var winner = false;
 var started = false;
 
 const SEPARATION = 20;
@@ -37,8 +37,10 @@ window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
 
+    initVars();
+
     setInterval(function() {
-        moveAll();
+        moveEverything();
         drawEverything();
     }, 1000 / speed);
 
@@ -46,11 +48,13 @@ window.onload = function() {
 
     canvas.addEventListener('mousemove', function(evt) {
         var mousePos = mousePosition(evt);
-        playerY = mousePos.y - (PADDLE_HEIGHT / 2);
+        if (mousePos.y >= (PADDLE_HEIGHT / 2) - 10 && mousePos.y <= canvas.height + 10 - PADDLE_HEIGHT / 2) {
+            playerY = mousePos.y - (PADDLE_HEIGHT / 2);
+        }
     })
 }
 
-function moveAll() {
+function moveEverything() {
     if (winner || !started) {
         return;
     }
@@ -102,8 +106,8 @@ function drawEverything() {
     drawRect(0, 0, canvas.width, canvas.height, 'black');
 
     if (!started) {
-        printText("white", "32px Arial", "Welcome Player", 300, 200);
-        printText("white", "16px Arial", "You play with the left paddle.", 250, 250);
+        printText("white", "32px Arial", "Welcome to Tennis Arcade", 220, 100);
+        printText("white", "16px Arial", "You will play with the left paddle.", 250, 250);
         printText("white", "16px Arial", "You can move it with the mouse movement.", 250, 280);
         printText("white", "16px Arial", "Game finishes when one of both get 5 points.", 250, 310);
         printText("white", "12px Arial", "Click to start the game.", 345, 500);
@@ -137,6 +141,23 @@ function drawEverything() {
     printText("white", "32px Arial", machineScore, canvas.width - 110, 100);
 }
 
+function initVars() {
+    speed = 30;
+    ballX = canvas.width / 2;
+    ballSpeedX = 10;
+    ballY = canvas.height / 2;
+    ballSpeedY = 4;
+    ballRadius = 5;
+    playerY = 250;
+    paddleY = 250;
+    flag = false;
+    machinePrecision = 20;
+    machineSpeed = 6;
+    playerScore = 0;
+    machineScore = 0;
+    winner = false;
+}
+
 function ballReset() {
     if (playerScore >= WINNING_SCORE || machineScore >= WINNING_SCORE) {
         winner = true;
@@ -145,7 +166,8 @@ function ballReset() {
     flag = false;
     machineSpeed++;
     machinePrecision--;
-    ballSpeedX += 2;
+    ballSpeedX = ballSpeedX < 0 ? ballSpeedX - 2 : ballSpeedX + 2;
+    //ballSpeedX += 2;
     ballSpeedX = -ballSpeedX;
     ballX = canvas.width / 2;
 }
@@ -174,22 +196,9 @@ function mousePosition(evt) {
     };
 }
 
-function handleMouseClick(evt) {
+function handleMouseClick() {
     if (winner) {
-        speed = 30;
-        ballX = canvas.width / 2;
-        ballSpeedX = 10;
-        ballY = canvas.height / 2;
-        ballSpeedY = 4;
-        ballRadius = 5;
-        playerY = 250;
-        paddleY = 250;
-        flag = false;
-        machinePrecision = 20;
-        machineSpeed = 6;
-        playerScore = 0;
-        machineScore = 0;
-        winner = false;
+        initVars();
     }
     started = true;
 }
@@ -218,5 +227,6 @@ function drawNet() {
     }
 }
     </script>
+    <p>by Samuel Reyes Alvarez</p>
 </body>
 </html>
