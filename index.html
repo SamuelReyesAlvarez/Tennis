@@ -8,7 +8,7 @@
     <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script>
 // @author: Samuel Reyes Alvarez
-// @version: 4 (30/07/2019)
+// @version: 5 (30/07/2019)
 var canvas;
 var canvasContext;
 var speed;
@@ -105,15 +105,6 @@ function drawEverything() {
     // Background
     drawRect(0, 0, canvas.width, canvas.height, 'black');
 
-    if (!started) {
-        printText("white", "32px Arial", "Welcome to Tennis Arcade", 220, 100);
-        printText("white", "16px Arial", "You will play with the left paddle.", 250, 250);
-        printText("white", "16px Arial", "You can move it with the mouse movement.", 250, 280);
-        printText("white", "16px Arial", "Game finishes when one of both get 5 points.", 250, 310);
-        printText("white", "12px Arial", "Click to start the game.", 345, 500);
-        return;
-    }
-
     if (winner) {
         printText("white", "32px Arial", "Player " + playerScore + " - " + machineScore + " Machine", 255, 100);
         if (playerScore >= WINNING_SCORE) {
@@ -122,7 +113,7 @@ function drawEverything() {
         if (machineScore >= WINNING_SCORE) {
             printText("white", "60px Arial", "YOU LOST!!", 225, 300);
         }
-        printText("white", "12px Arial", "Click to continue", 355, 500);
+        printText("white", "14px Arial", "Click to continue", 355, 500);
         return;
     }
 
@@ -139,6 +130,15 @@ function drawEverything() {
     printText("white", "32px Arial", playerScore, 100, 100);
     printText("white", "16px Arial", "Machine", canvas.width - 130, 65);
     printText("white", "32px Arial", machineScore, canvas.width - 110, 100);
+
+    if (!started) {
+        printText("green", "32px Arial", "Welcome to Tennis Arcade", 220, 100);
+        printText("green", "16px Arial", "- You will play with the left paddle.", 150, 250);
+        printText("green", "16px Arial", "- You can move up/down your paddle by moving the mouse inside the black box.", 150, 280);
+        printText("green", "16px Arial", "- Game finishes when one of both get 5 points.", 150, 310);
+        printText("green", "14px Arial", "Click to start the game.", 345, 500);
+        return;
+    }
 }
 
 function initVars() {
