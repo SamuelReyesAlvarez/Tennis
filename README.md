@@ -1,3 +1,3 @@
 # TennisArcade
 
-To play this game -> [GitHub](http://SamuelReyesAlvarez.github.io/TennisArcade)
+To play this game -> [Tennis Arcade](http://SamuelReyesAlvarez.github.io/TennisArcade)
